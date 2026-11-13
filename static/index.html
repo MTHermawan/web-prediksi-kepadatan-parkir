@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Klasifikasi Kepadatan Area Parkir</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Klasifikasi Kepadatan Area Parkir</h1>
+    <p>Unggah foto area parkir, lalu model CNN akan memperkirakan tingkat kepadatannya.</p>
+  </header>
+
+  <main class="layout">
+    <!-- Kolom kiri: unggah gambar -->
+    <section class="card" aria-labelledby="judul-unggah">
+      <h2 id="judul-unggah">1. Gambar parkiran</h2>
+
+      <label id="dropzone" class="dropzone" for="file-input">
+        <input id="file-input" type="file" accept="image/jpeg,image/png,image/bmp">
+        <div id="dropzone-hint" class="dropzone-hint">
+          <strong>Klik untuk memilih gambar</strong>
+          <span>atau seret dan lepas ke sini</span>
+          <small>JPG, PNG, atau BMP &middot; maks. <span id="max-mb">10</span> MB</small>
+        </div>
+        <img id="preview" class="preview" alt="Pratinjau gambar yang dipilih" hidden>
+      </label>
+
+      <p id="file-name" class="file-name" hidden></p>
+
+      <div class="actions">
+        <button id="analyze-btn" class="btn primary" type="button" disabled>Analisis gambar</button>
+        <button id="reset-btn" class="btn" type="button" disabled>Ganti gambar</button>
+      </div>
+      <p id="message" class="message" role="alert" hidden></p>
+    </section>
+
+    <!-- Kolom kanan: hasil prediksi -->
+    <section class="card" aria-labelledby="judul-hasil" aria-live="polite">
+      <h2 id="judul-hasil">2. Hasil prediksi</h2>
+
+      <div id="result-empty" class="result-empty">
+        Hasil akan tampil di sini setelah gambar dianalisis.
+      </div>
+
+      <div id="result" hidden>
+        <div id="result-badge" class="badge">
+          <span class="badge-caption">Tingkat kepadatan</span>
+          <span id="result-label" class="badge-label"></span>
+          <span id="result-range" class="badge-range"></span>
+        </div>
+
+        <p class="confidence">Keyakinan model: <strong id="result-confidence"></strong></p>
+        <p id="low-confidence" class="warning" hidden>
+          Keyakinan model rendah. Pastikan gambar benar-benar area parkir dan petak terlihat jelas.
+        </p>
+
+        <h3>Probabilitas tiap kelas</h3>
+        <ul id="prob-list" class="prob-list"></ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Tingkat kepadatan didasarkan pada rasio petak terisi terhadap seluruh petak pada gambar.
+      Model hanya dilatih pada gambar area parkir sejenis dataset pelatihan, sehingga hasilnya
+      berupa perkiraan, bukan hitungan pasti.
+    </p>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
